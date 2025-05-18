@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Join Funngro to explore real company projects and earn as a teen!" />
+  <meta name="keywords" content="Funngro, teen freelancers, earn money, company projects, SEO friendly" />
+  <meta name="author" content="Your Name" />
+  <title>Funngro - Home</title>
+  <style>
+    /* Reset and base */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #0e1e2b, #102734);
+      color: #fff;
+      backdrop-filter: blur(10px);
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      background: rgba(14, 30, 43, 0.6);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      position: relative;
+      z-index: 1001;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    .logo img {
+      height: 40px;
+      margin-right: 0.5rem;
+      border-radius: 12px;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    nav a {
+      color: #90ee90;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    nav a:hover {
+      background: rgba(144, 238, 144, 0.2);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 25px;
+      height: 20px;
+      justify-content: space-between;
+    }
+    .hamburger div {
+      height: 3px;
+      background: #90ee90;
+      border-radius: 3px;
+      transition: 0.3s ease;
+    }
+
+    /* Responsive nav */
+    @media (max-width: 768px) {
+      nav {
+        position: fixed;
+        top: 60px;
+        right: -250px;
+        background: rgba(14, 30, 43, 0.95);
+        flex-direction: column;
+        width: 200px;
+        padding: 1rem;
+        border-radius: 0 0 0 12px;
+        height: calc(100vh - 60px);
+        gap: 1rem;
+        transition: right 0.3s ease;
+        box-shadow: -4px 0 12px rgba(0,0,0,0.4);
+        z-index: 1000;
+      }
+      nav.open {
+        right: 0;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 4rem 2rem;
+      margin: 3rem auto;
+      max-width: 900px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .hero:hover {
+      transform: scale(1.01);
+    }
+    .hero h1 {
+      color: #90ee90;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: #d1f7d1;
+      max-width: 800px;
+      margin: 0.5rem auto;
+    }
+    .cta {
+      background: rgba(144, 238, 144, 0.8);
+      color: #0e1e2b;
+      padding: 1rem 2.5rem;
+      border: none;
+      font-size: 1rem;
+      margin-top: 2rem;
+      cursor: pointer;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    .cta:hover {
+      background: #a6f0a6;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      background: rgba(14, 30, 43, 0.5);
+      color: #aaa;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px 20px 0 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Funngro Logo" />
+      <h2>Funngro</h2>
+    </div>
+    <nav id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="teen.html">For Teens</a>
+    </nav>
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Launch Your Career as a Teenlancer 🚀</h1>
+    <p>Funngro connects teens with real-world projects from top companies. It's more than experience—it's your first step into the professional world.</p>
+    <p>🔹 Learn valuable skills | 🔹 Work remotely | 🔹 Build a portfolio | 🔹 Get paid</p>
+    <a href="teen.html"><button class="cta">Explore Teen Projects</button></a>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Funngro. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      hamburger.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
