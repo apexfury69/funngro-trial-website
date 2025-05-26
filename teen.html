@@ -8,6 +8,17 @@
   <meta name="author" content="Your Name" />
   <title>Funngro - For Teens</title>
   <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
@@ -54,6 +65,7 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.3);
       backdrop-filter: blur(15px);
       transition: transform 0.3s ease;
+      animation: fadeIn 1s ease-out;
     }
     .content:hover {
       transform: scale(1.01);
@@ -108,6 +120,102 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 20px 20px 0 0;
     }
+    .filter-buttons {
+      text-align: center;
+      margin: 2rem 0;
+      animation: fadeIn 1s ease-out 0.3s backwards;
+    }
+
+    .filter-btn {
+      background: rgba(144, 238, 144, 0.1);
+      border: 2px solid #90ee90;
+      color: #90ee90;
+      padding: 0.8rem 1.5rem;
+      margin: 0 0.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+
+    .filter-btn:hover {
+      background: #90ee90;
+      color: #0e1e2b;
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      background: #90ee90;
+      color: #0e1e2b;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem 0;
+      animation: fadeIn 1s ease-out 0.6s backwards;
+    }
+
+    .project-box {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .project-box:hover {
+      transform: translateY(-5px) scale(1.02);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .project-box h3 {
+      color: #90ee90;
+      margin-bottom: 1rem;
+    }
+
+    .project-box .tags {
+      display: flex;
+      gap: 0.5rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background: rgba(144, 238, 144, 0.2);
+      color: #90ee90;
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.9rem;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      color: #aefbae;
+      font-size: 0.9rem;
+    }
+
+    .featured {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured::after {
+      content: 'Featured';
+      position: absolute;
+      top: 1rem;
+      right: -2rem;
+      background: #90ee90;
+      color: #0e1e2b;
+      padding: 0.3rem 3rem;
+      transform: rotate(45deg);
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -143,10 +251,116 @@
         <p>Work from anywhere while collaborating online with professionals and peers.</p>
       </div>
     </div>
+
+    <h2 style="text-align: center; margin-top: 4rem; color: #90ee90;">Available Projects</h2>
+    
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="kyc">KYC Projects</button>
+      <button class="filter-btn" data-filter="non-kyc">Non-KYC Projects</button>
+    </div>
+
+    <div class="projects-grid">
+      <div class="project-box featured" data-type="kyc">
+        <h3>Social Media Management</h3>
+        <p>Help manage social media accounts for a growing startup. Create engaging content and analyze metrics.</p>
+        <div class="tags">
+          <span class="tag">Social Media</span>
+          <span class="tag">Content Creation</span>
+          <span class="tag">KYC Required</span>
+        </div>
+        <div class="stats">
+          <span>💰 $15-20/hr</span>
+          <span>⏰ 10-15 hrs/week</span>
+        </div>
+      </div>
+
+      <div class="project-box" data-type="non-kyc">
+        <h3>Website Testing</h3>
+        <p>Test websites and apps for bugs and user experience issues. Report findings in detail.</p>
+        <div class="tags">
+          <span class="tag">Testing</span>
+          <span class="tag">QA</span>
+          <span class="tag">No KYC</span>
+        </div>
+        <div class="stats">
+          <span>💰 $12-15/hr</span>
+          <span>⏰ Flexible</span>
+        </div>
+      </div>
+
+      <div class="project-box" data-type="kyc">
+        <h3>Content Writing</h3>
+        <p>Write engaging blog posts and articles for various technology companies.</p>
+        <div class="tags">
+          <span class="tag">Writing</span>
+          <span class="tag">Research</span>
+          <span class="tag">KYC Required</span>
+        </div>
+        <div class="stats">
+          <span>💰 $0.10/word</span>
+          <span>⏰ Project-based</span>
+        </div>
+      </div>
+
+      <div class="project-box" data-type="non-kyc">
+        <h3>Data Entry</h3>
+        <p>Help organize and input data for various business projects. Attention to detail required.</p>
+        <div class="tags">
+          <span class="tag">Data Entry</span>
+          <span class="tag">Excel</span>
+          <span class="tag">No KYC</span>
+        </div>
+        <div class="stats">
+          <span>💰 $10-12/hr</span>
+          <span>⏰ 5-10 hrs/week</span>
+        </div>
+      </div>
+    </div>
   </section>
 
   <footer>
     <p>&copy; 2025 Funngro. All rights reserved.</p>
   </footer>
+
+  <script>
+    // Animation for cards on scroll
+    const cards = document.querySelectorAll('.card');
+    const projectBoxes = document.querySelectorAll('.project-box');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animation = 'fadeIn 0.6s ease-out forwards';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    cards.forEach(card => observer.observe(card));
+    projectBoxes.forEach(box => observer.observe(box));
+
+    // Project filtering
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterBtns.forEach(b => b.classList.remove('active'));
+        // Add active class to clicked button
+        btn.classList.add('active');
+        
+        const filter = btn.getAttribute('data-filter');
+        
+        projectBoxes.forEach(box => {
+          if (filter === 'all' || box.getAttribute('data-type') === filter) {
+            box.style.display = 'block';
+            box.style.animation = 'fadeIn 0.6s ease-out forwards';
+          } else {
+            box.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
