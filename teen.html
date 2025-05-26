@@ -316,6 +316,34 @@
           <span>⏰ 5-10 hrs/week</span>
         </div>
       </div>
+
+      <div class="project-box featured" data-type="kyc">
+        <h3>Junior Web Developer</h3>
+        <p>Help build and maintain WordPress websites for small businesses. Perfect for aspiring developers.</p>
+        <div class="tags">
+          <span class="tag">WordPress</span>
+          <span class="tag">HTML/CSS</span>
+          <span class="tag">KYC Required</span>
+        </div>
+        <div class="stats">
+          <span>💰 $18-25/hr</span>
+          <span>⏰ 10-15 hrs/week</span>
+        </div>
+      </div>
+
+      <div class="project-box" data-type="kyc">
+        <h3>Graphic Design Intern</h3>
+        <p>Create social media graphics and marketing materials for various clients.</p>
+        <div class="tags">
+          <span class="tag">Design</span>
+          <span class="tag">Social Media</span>
+          <span class="tag">KYC Required</span>
+        </div>
+        <div class="stats">
+          <span>💰 $15-20/hr</span>
+          <span>⏰ 10-15 hrs/week</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -341,16 +369,16 @@
 
     // Project filtering
     const filterBtns = document.querySelectorAll('.filter-btn');
-    
+
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         // Remove active class from all buttons
         filterBtns.forEach(b => b.classList.remove('active'));
         // Add active class to clicked button
         btn.classList.add('active');
-        
+
         const filter = btn.getAttribute('data-filter');
-        
+
         projectBoxes.forEach(box => {
           if (filter === 'all' || box.getAttribute('data-type') === filter) {
             box.style.display = 'block';
