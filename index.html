@@ -7,6 +7,8 @@
   <meta name="keywords" content="Funngro, teen freelancers, earn money, company projects, SEO friendly" />
   <meta name="author" content="Your Name" />
   <title>Funngro - Home</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <style>
     /* Reset and base */
     body {
@@ -188,6 +190,67 @@
       navLinks.classList.toggle('open');
       hamburger.classList.toggle('active');
     });
+
+    // GSAP Animations for header
+    gsap.from(".logo", {
+      opacity: 0,
+      x: -50,
+      duration: 0.8,
+      delay: 0.2,
+      ease: "power3.out"
+    });
+
+    gsap.from("nav a", {
+      opacity: 0,
+      y: -30,
+      duration: 0.6,
+      stagger: 0.2,
+      delay: 0.5,
+      ease: "power3.out"
+    });
+
+    // GSAP Animations for hero section
+    gsap.from(".hero h1", {
+      opacity: 0,
+      y: 30, // Slightly reduced y
+      filter: 'blur(8px)',
+      scale: 0.9,
+      duration: 1.2, // Slightly longer duration for effect
+      delay: 1.0,
+      ease: "power3.out"
+    });
+
+    gsap.from(".hero p", {
+      opacity: 0,
+      y: 20, // Slightly reduced y
+      filter: 'blur(4px)',
+      scale: 0.95,
+      duration: 1.0, // Slightly longer duration
+      stagger: 0.25,
+      delay: 1.2,
+      ease: "power2.out"
+    });
+
+    gsap.fromTo(".hero .cta",
+      { scale: 0.9, opacity: 0, y: 10 }, // from state
+      { // to state
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 1.5, // Start after paragraph animations
+        ease: "back.out(1.7)", // A slight bounce effect
+        onComplete: function() { // Add a subtle pulse hover effect after initial animation
+          gsap.to(".hero .cta", {
+            scale: 1.05,
+            duration: 0.8,
+            repeat: -1,
+            yoyo: true,
+            ease: "power1.inOut"
+          });
+        }
+      }
+    );
   </script>
 </body>
 </html>

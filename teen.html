@@ -7,6 +7,8 @@
   <meta name="keywords" content="Funngro, teens, projects, freelance, earn money, teenlancer" />
   <meta name="author" content="Your Name" />
   <title>Funngro - For Teens</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <style>
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -65,7 +67,7 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.3);
       backdrop-filter: blur(15px);
       transition: transform 0.3s ease;
-      animation: fadeIn 1s ease-out;
+      /* animation: fadeIn 1s ease-out; */ /* Removed as GSAP handles children */
     }
     .content:hover {
       transform: scale(1.01);
@@ -154,7 +156,7 @@
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
       padding: 2rem 0;
-      animation: fadeIn 1s ease-out 0.6s backwards;
+      /* animation: fadeIn 1s ease-out 0.6s backwards; */ /* Removed as children .project-box are animated by GSAP on scroll */
     }
 
     .project-box {
@@ -352,41 +354,150 @@
   </footer>
 
   <script>
-    // Animation for cards on scroll
-    const cards = document.querySelectorAll('.card');
-    const projectBoxes = document.querySelectorAll('.project-box');
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animation = 'fadeIn 0.6s ease-out forwards';
+    // GSAP Animations for header
+    gsap.from(".logo", {
+      opacity: 0,
+      x: -50,
+      duration: 0.8,
+      delay: 0.2,
+      ease: "power3.out"
+    });
+
+    gsap.from("nav a", {
+      opacity: 0,
+      y: -30,
+      duration: 0.6,
+      stagger: 0.2,
+      delay: 0.5,
+      ease: "power3.out"
+    });
+
+    // GSAP animation for the main H1 in .content section
+    // Note: .content itself has a CSS animation `fadeIn`. This might need coordination.
+    // For now, we let them both run. GSAP is usually more dominant for specific elements.
+    gsap.from(".content > h1", {
+        opacity: 0,
+        y: 40,
+        filter: 'blur(5px)',
+        scale: 0.95, // Slightly less aggressive scale
+        duration: 1.0,
+        delay: 0.5, // Delay to ensure it plays after initial page/header elements if visible on load
+                     // Or adjust if it's meant to be scroll-triggered primarily
+        scrollTrigger: {
+            trigger: ".content > h1",
+            start: "top 85%", // Trigger when 85% of it is in view
+            toggleActions: "play none none none",
+            once: true
+        }
+    });
+     gsap.from(".content > p:first-of-type", { // Target first paragraph in content
+        opacity: 0,
+        y: 30,
+        filter: 'blur(4px)',
+        scale: 0.98,
+        duration: 0.8,
+        delay: 0.7, // After the H1
+        scrollTrigger: {
+            trigger: ".content > p:first-of-type",
+            start: "top 85%",
+            toggleActions: "play none none none",
+            once: true
+        }
+    });
+
+
+    // GSAP ScrollTrigger animations for .card elements and their H3s
+    gsap.utils.toArray(".card").forEach((card, i) => {
+      let cardTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: card,
+          start: "top 90%",
+          toggleActions: "play none none none",
+          once: true,
         }
       });
-    }, { threshold: 0.1 });
 
-    cards.forEach(card => observer.observe(card));
-    projectBoxes.forEach(box => observer.observe(box));
+      cardTimeline.from(card, {
+        opacity: 0,
+        y: 50,
+        scale: 0.95,
+        duration: 0.5,
+        delay: i * 0.1 // Stagger for the card itself
+      })
+      .from(card.querySelector("h3"), {
+        opacity: 0,
+        y: 20,
+        filter: 'blur(3px)',
+        scale: 0.9,
+        duration: 0.4,
+      }, "-=0.2"); // Start h3 animation slightly before card finishes or overlap
+    });
+
+    // GSAP ScrollTrigger animations for .project-box elements and their H3s
+    const projectBoxesArray = gsap.utils.toArray('.project-box');
+
+    projectBoxesArray.forEach((box, i) => {
+      let boxTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: box,
+          start: "top 90%",
+          toggleActions: "play none none none",
+          once: true,
+        }
+      });
+
+      boxTimeline.from(box, {
+        opacity: 0,
+        scale: 0.9,
+        y: 60,
+        duration: 0.6,
+        // No direct stagger for box, ScrollTrigger handles individual triggering.
+        // If a stagger across multiple simultaneously appearing boxes is needed,
+        // a batch approach with a small delay added to the timeline would be better.
+      })
+      .from(box.querySelector("h3"), {
+        opacity: 0,
+        y: 20,
+        filter: 'blur(3px)',
+        scale: 0.9,
+        duration: 0.4,
+      }, "-=0.2"); // Start h3 animation slightly before box finishes or overlap
+    });
 
     // Project filtering
     const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectBoxes = document.querySelectorAll('.project-box'); // Re-select for filtering logic
 
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        // Remove active class from all buttons
         filterBtns.forEach(b => b.classList.remove('active'));
-        // Add active class to clicked button
         btn.classList.add('active');
-
         const filter = btn.getAttribute('data-filter');
 
+        let hasVisibleItems = false;
         projectBoxes.forEach(box => {
-          if (filter === 'all' || box.getAttribute('data-type') === filter) {
+          const type = box.getAttribute('data-type');
+          if (filter === 'all' || type === filter) {
             box.style.display = 'block';
-            box.style.animation = 'fadeIn 0.6s ease-out forwards';
+            // Optional: Re-run GSAP animation if you want them to animate in again after filtering
+            // For example, by clearing previous animation and re-applying:
+            // gsap.set(box, {clearProps: "all"}); // Clears GSAP applied styles
+            // gsap.from(box, {opacity: 0, scale: 0.9, y: 60, duration: 0.6, delay: 0.1 * i}); // Re-apply (careful with index 'i' here)
+            // However, the 'once: true' in ScrollTrigger means they won't re-animate on scroll by default.
+            // If they were hidden and shown, their ScrollTrigger might need a refresh or re-evaluation.
+            hasVisibleItems = true;
           } else {
             box.style.display = 'none';
           }
         });
+
+        // Refresh ScrollTrigger to recalculate positions
+        ScrollTrigger.refresh();
+
+        // If you want to re-trigger animations for newly visible items after filtering,
+        // you might need to manually restart their GSAP tweens or re-evaluate ScrollTriggers.
+        // For now, this setup ensures they animate once when they first scroll into view.
+        // If a filter hides and then shows them, they won't re-animate on scroll due to 'once: true'.
       });
     });
   </script>
